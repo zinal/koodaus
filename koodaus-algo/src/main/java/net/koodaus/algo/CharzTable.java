@@ -13,7 +13,7 @@ import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import net.koodaus.util.JdomHelpers;
-import net.koodaus.util.DsMaskUtil;
+import net.koodaus.util.KoodausUtil;
 
 /**
  * Translation table for character substitution.
@@ -250,9 +250,9 @@ public class CharzTable {
         for (Range r : ranges) {
             org.jdom2.Element je = new org.jdom2.Element("char-range");
             je.setAttribute("size", String.valueOf(r.size));
-            je.setAttribute("src-char", DsMaskUtil.fromCodepoint(r.src));
+            je.setAttribute("src-char", KoodausUtil.fromCodepoint(r.src));
             je.setAttribute("src-hex", Integer.toHexString(r.src));
-            je.setAttribute("dst-char", DsMaskUtil.fromCodepoint(r.dst));
+            je.setAttribute("dst-char", KoodausUtil.fromCodepoint(r.dst));
             je.setAttribute("dst-hex", Integer.toHexString(r.dst));
             jr.addContent(je);
         }
@@ -337,10 +337,10 @@ public class CharzTable {
             final StringBuilder sb = new StringBuilder();
             sb.append("[");
             for (int i=0; i<size; ++i)
-                DsMaskUtil.appendCodepoint(sb, src + i);
+                KoodausUtil.appendCodepoint(sb, src + i);
             sb.append("] -> [");
             for (int i=0; i<size; ++i)
-                DsMaskUtil.appendCodepoint(sb, dst + i);
+                KoodausUtil.appendCodepoint(sb, dst + i);
             sb.append("]");
             return sb.toString();
         }

@@ -1,14 +1,12 @@
 package net.koodaus.util;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.util.Objects;
 
 /**
  * Miscellaneous utility methods which are hard to put elsewhere.
  * @author zinal
  */
-public class DsMaskUtil {
+public class KoodausUtil {
 
     /**
      * Empty string - treated as a missing value.
@@ -23,6 +21,13 @@ public class DsMaskUtil {
 
     public static String lower(String value) {
         return safe(value).toLowerCase();
+    }
+
+    public static String unquote(String s) {
+        if (s.startsWith("\"") && s.endsWith("\"") && s.length()>1) {
+            s = s.substring(1, s.length()-1);
+        }
+        return s.trim();
     }
 
     public static boolean equalsCI(String a, String b) {
@@ -95,46 +100,6 @@ public class DsMaskUtil {
         if (path.startsWith("~/"))
             return System.getProperty("user.home") + path.substring(1);
         return path;
-    }
-
-    /**
-     * Delete H2 database files denoted by some pathname
-     * @param pathname H2 database pathname
-     */
-    public static void deleteFiles(String pathname) {
-        pathname = resolvePath(pathname);
-        deleteFiles(new File(pathname));
-    }
-
-    /**
-     * Delete H2 database files denoted by some pathname
-     * @param pathname H2 database pathname
-     */
-    public static void deleteFiles(File pathname) {
-        final File pn = pathname.getAbsoluteFile();
-        final String fullName = pn.getAbsolutePath();
-        final String fullStart = fullName + ".";
-        File[] victims = pn.getParentFile().listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File x) {
-                final String cur = x.getAbsolutePath();
-                return (fullName.equals(cur)
-                        || cur.startsWith(fullStart));
-            }
-        });
-        if (victims!=null) {
-            for (File v : victims)
-                v.delete();
-        }
-    }
-
-    /**
-     * Generate H2 database URL based on pathname
-     * @param pathname H2 database pathname
-     * @return H2 database URL
-     */
-    public static String makeConnectionUrl(String pathname) {
-        return "jdbc:h2:" + resolvePath(pathname).replaceAll("\\\\", "/");
     }
 
     public static RuntimeException toRE(String message, Throwable ex) {

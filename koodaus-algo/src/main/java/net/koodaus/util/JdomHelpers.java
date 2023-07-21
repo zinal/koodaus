@@ -23,7 +23,7 @@ public class JdomHelpers {
         if (codePoint < 0)
             codePoint = -codePoint;
         if (Character.isValidCodePoint(codePoint))
-            return DsMaskUtil.fromCodepoint(codePoint);
+            return KoodausUtil.fromCodepoint(codePoint);
         return null;
     }
 

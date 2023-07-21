@@ -1,6 +1,6 @@
 package net.koodaus.algo;
 
-import net.koodaus.util.DsMaskUtil;
+import net.koodaus.util.KoodausUtil;
 
 
 /**
@@ -64,7 +64,7 @@ public class CharzTranslate {
             return output;
         final StringBuilder sb = (output == null) ? new StringBuilder() : output;
         cs.codePoints().forEach(src -> {
-            DsMaskUtil.appendCodepoint(sb, table.translate(src));
+            KoodausUtil.appendCodepoint(sb, table.translate(src));
         });
         return sb;
     }

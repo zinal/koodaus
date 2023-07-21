@@ -44,7 +44,7 @@ public class PasswordVault {
         try {
             this.data = loadEntries(file, this.secretKey);
         } catch(Exception ex) {
-            throw DsMaskUtil.toRE("Failed to load password storage", ex);
+            throw KoodausUtil.toRE("Failed to load password storage", ex);
         }
         LOG.debug("Loaded password storage at {}", file);
     }
@@ -92,7 +92,7 @@ public class PasswordVault {
             saveEntries(file, secretKey, data);
             LOG.debug("Saved password storage at {}", file);
         } catch(Exception ex) {
-            throw DsMaskUtil.toRE("Error saving passwords", ex);
+            throw KoodausUtil.toRE("Error saving passwords", ex);
         }
     }
 
@@ -118,7 +118,7 @@ public class PasswordVault {
             writeKeyToStash(fstash, sks);
             return sks;
         } catch(Exception ex) {
-            throw DsMaskUtil.toRE("Cannot obtain password encryption key", ex);
+            throw KoodausUtil.toRE("Cannot obtain password encryption key", ex);
         }
     }
 

@@ -1,7 +1,7 @@
 package net.koodaus.algo;
 
 import java.nio.charset.StandardCharsets;
-import net.koodaus.util.DsMaskUtil;
+import net.koodaus.util.KoodausUtil;
 
 /**
  * Naive Java-only FPE algorithm implementation.
@@ -115,7 +115,7 @@ public class FpxGeneric {
         final StringBuilder retval = new StringBuilder(value.length());
         // prepend with the skipped characters
         for ( int ix = 0; ix < skipBefore; ++ix ) {
-            DsMaskUtil.appendCodepoint(retval, codePoints[ix]);
+            KoodausUtil.appendCodepoint(retval, codePoints[ix]);
         }
         // generate the hash-based replacement
         final int lastIndex = codePoints.length - skipAfter;
@@ -127,11 +127,11 @@ public class FpxGeneric {
                 int index = indexGen.nextIndex(charClass.getLength());
                 toAppend = charClass.getCodePoint(index);
             }
-            DsMaskUtil.appendCodepoint(retval, toAppend);
+            KoodausUtil.appendCodepoint(retval, toAppend);
         }
         // append with the skipped characters
         for ( int ix = lastIndex; ix < codePoints.length; ++ix ) {
-            DsMaskUtil.appendCodepoint(retval, codePoints[ix]);
+            KoodausUtil.appendCodepoint(retval, codePoints[ix]);
         }
         return retval.toString();
     }
