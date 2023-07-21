@@ -39,10 +39,18 @@ public class DictConv {
         return output;
     }
 
+    private static String[] parent1(String name) {
+        if (name.endsWith("ий")) {
+            String base = name.substring(0, name.length()-2);
+            return new String[]{name + "иевич", name + "иевна"};
+        }
+        return new String[]{};
+    }
+
     public static void main(String[] args) {
         if (args.length!=3) {
             System.err.println("USAGE: DictConv.class sourcedict.txt targetdict.txt ACTION");
-            System.err.println("\tACTION: LOWER UPPER VALUE");
+            System.err.println("\tACTION: LOWER UPPER VALUE PARENT1");
             System.exit(2);
         }
         try {
@@ -58,6 +66,9 @@ public class DictConv {
             } else if ("VALUE".equalsIgnoreCase(actionCode)) {
                 output = Dictionary.loadEntries(input.getName(),
                     input.toStream().map(de -> new DictEntry(de.getValue())));
+            } else if ("PARENT1".equalsIgnoreCase(actionCode)) {
+                output = Dictionary.loadEntries(input.getName(),
+                    input.toStream().map(de -> new DictEntry(de.getValue(), parent1(de.getValue()))));
             } else {
                 throw new IllegalArgumentException("Unsupported action: " + actionCode);
             }
