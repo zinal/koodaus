@@ -1,7 +1,12 @@
 package net.koodaus.dict;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -95,6 +100,36 @@ public class Dictionary {
         });
         LOG.info("Dictionary {} complete, total {} entries", name, dict.size());
         return dict;
+    }
+
+    private static void writeValue(PrintWriter pw, String value) {
+        if (value.contains(" ") || value.contains("\t")) {
+            pw.append('"');
+            pw.append(value);
+            pw.append('"');
+        } else {
+            pw.append(value);
+        }
+    }
+
+    public void save(String fname) {
+        try (OutputStreamWriter fw =
+                new OutputStreamWriter(new FileOutputStream(fname), StandardCharsets.UTF_8)) {
+            final PrintWriter pw = new PrintWriter(fw);
+            for (DictEntry de : elements) {
+                writeValue(pw, de.getValue());
+                if (de.getExtras() != null) {
+                    for (String extraValue : de.getExtras()) {
+                        pw.append("\t");
+                        writeValue(pw, extraValue);
+                    }
+                }
+                pw.append("\n");
+            }
+            pw.close();
+        } catch(IOException ix) {
+            throw new RuntimeException("Cannot write file " + fname, ix);
+        }
     }
 
 }
