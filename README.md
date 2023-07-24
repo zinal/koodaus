@@ -35,12 +35,22 @@ spark.sql("SELECT COUNT(*), COUNT(DISTINCT str_1), COUNT(DISTINCT str_2) FROM te
 
 ```
 
-Sample generation statistics
+Sample generation statistics, case 1:
 
 ```text
 total rows:         5000000000
 male distinct:       398110532
 female distinct:     257924017
+theoretical male:    404109480
+theoretical female:  258687660
+```
+
+Sample generation statistics, case 2:
+
+```text
+total rows:          250000000
+male distinct:       173128955
+female distinct:     150158672
 theoretical male:    404109480
 theoretical female:  258687660
 ```

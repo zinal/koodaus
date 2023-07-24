@@ -4,20 +4,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.SplittableRandom;
 
 /**
- * Replacement index generator, CRC32 implementation.
- * @author zinal
+ * Replacement index generator, CRC based implementation.
+ *
+ * @author mzinal
  */
-public class FpxFPH implements FpxIndexerFactory {
+public abstract class FpxCrcBase implements FpxIndexerFactory {
 
     private static final long serialVersionUID = 1L;
 
-    private final byte[] userKey;
+    protected final byte[] userKey;
 
-    public FpxFPH(byte[] userKey) {
+    public FpxCrcBase(byte[] userKey) {
         this.userKey = userKey;
     }
 
-    public FpxFPH(String userKey) {
+    public FpxCrcBase(String userKey) {
         this(userKey.getBytes(StandardCharsets.UTF_8));
     }
 
@@ -26,15 +27,7 @@ public class FpxFPH implements FpxIndexerFactory {
         return new Indexer(getSeedValue(value, iteration));
     }
 
-    public final long getSeedValue(String value, String iteration) {
-        final PureJavaCrc32 crc = new PureJavaCrc32();
-        if (userKey != null && userKey.length > 0)
-            crc.update(userKey);
-        crc.update(value.getBytes(StandardCharsets.UTF_8));
-        if (iteration != null)
-            crc.update(iteration.getBytes(StandardCharsets.UTF_8));
-        return crc.getValue();
-    }
+    abstract long getSeedValue(String value, String iteration);
 
     public static class Indexer implements FpxIndexer {
 

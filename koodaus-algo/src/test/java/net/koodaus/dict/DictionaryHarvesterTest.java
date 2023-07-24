@@ -1,6 +1,6 @@
 package net.koodaus.dict;
 
-import net.koodaus.algo.FpxFPH;
+import net.koodaus.algo.FpxCrc32;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ public class DictionaryHarvesterTest {
         Dictionary namesMiddleFemale = namesFirstMale.extractExtra("names-middle-female", 1);
         Assert.assertEquals(namesFirstMale.size(), namesMiddleFemale.size());
         
-        FpxFPH indexerFactory = new FpxFPH("здравствуйте, я ваша тётя!");
+        FpxCrc32 indexerFactory = new FpxCrc32("здравствуйте, я ваша тётя!");
         DictionaryHarvester harvestMale = new DictionaryHarvester(indexerFactory,
                 namesLastMale, namesFirstMale, namesMiddleMale);
         DictionaryHarvester harvestFemale = new DictionaryHarvester(indexerFactory,
