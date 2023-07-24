@@ -72,7 +72,7 @@ public class MaskFPH extends FpxAlgo {
     public MaskFPH(CharClassSet cset, byte[] userKey,
             int skipBefore, int skipAfter, boolean allowSameVal) {
         super(cset, userKey, skipBefore, skipAfter, allowSameVal, 
-                new FpxIndexHash(fixKey(userKey)));
+                new FpxFPH(fixKey(userKey)));
     }
 
     public static byte[] fixKey(byte[] userKey) {

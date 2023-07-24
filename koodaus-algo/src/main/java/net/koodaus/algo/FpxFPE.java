@@ -9,49 +9,82 @@ import javax.crypto.spec.SecretKeySpec;
  * Replacement index generator, FPE implementation.
  * @author zinal
  */
-public class FpxIndexFPE implements FpxIndexerFactory {
+public class FpxFPE implements FpxIndexerFactory {
 
-    private final Mac mac;
+    public static final String HMAC_NAME = "HmacSHA512";
 
-    public FpxIndexFPE(byte[] userKey, String hmacName) {
+    private final String hmacName;
+    private final SecretKeySpec keySpec;
+    private transient Mac mac;
+
+    public FpxFPE(byte[] userKey, String hmacName) {
         try {
-            SecretKeySpec keySpec = new SecretKeySpec(userKey, hmacName);
+            this.hmacName = hmacName;
+            this.keySpec = new SecretKeySpec(userKey, hmacName);
             this.mac = Mac.getInstance(hmacName);
-            this.mac.init(keySpec);
+            this.mac.init(this.keySpec);
         } catch(Exception ex) {
+            this.mac = null;
             throw new RuntimeException("Cannot initialize MAC " + hmacName, ex);
         }
     }
 
+    public FpxFPE(String userKey, String hmacName) {
+        this(userKey.getBytes(StandardCharsets.UTF_8), hmacName);
+    }
+
+    public FpxFPE(String userKey) {
+        this(userKey.getBytes(StandardCharsets.UTF_8), HMAC_NAME);
+    }
+
+    public FpxFPE(byte[] userKey) {
+        this(userKey, HMAC_NAME);
+    }
+
     @Override
     public FpxIndexer make(String value, String iteration) {
-        return new IndexGen(getMacValue(value, iteration));
+        return new Indexer(getMacValue(value, iteration));
+    }
+
+    private Mac getMac() {
+        if (mac==null) {
+            try {
+                mac = Mac.getInstance(hmacName);
+                mac.init(keySpec);
+            } catch(Exception ex) {
+                mac = null;
+                throw new RuntimeException("Cannot initialize MAC " + hmacName, ex);
+            }
+        }
+        return mac;
     }
 
     public final byte[] getMacValue(String value, String iteration) {
+        Mac xmac = null;
         try {
+            xmac = getMac();
             if (iteration != null && iteration.length() > 0) {
-                mac.update(iteration.getBytes(StandardCharsets.UTF_8));
-                mac.update((byte)1);
+                xmac.update(iteration.getBytes(StandardCharsets.UTF_8));
+                xmac.update((byte)1);
             }
-            return mac.doFinal(value.getBytes(StandardCharsets.UTF_8));
+            return xmac.doFinal(value.getBytes(StandardCharsets.UTF_8));
         } catch (Exception ex) {
             // MAC object cleanup for the worst case
             try {
-                mac.doFinal();
-            } catch (Exception tmp) {
-            }
+                if (xmac!=null)
+                    xmac.doFinal();
+            } catch (Exception tmp) {}
             throw new RuntimeException("Failed to compute MAC", ex);
         }
     }
 
-    public static class IndexGen implements FpxIndexer {
+    public static class Indexer implements FpxIndexer {
 
         private final byte[] macValue;
         private BitSet macBits = null;
         private int bitsPosition = 0;
 
-        public IndexGen(byte[] macValue) {
+        public Indexer(byte[] macValue) {
             this.macValue = macValue;
         }
 

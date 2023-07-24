@@ -18,4 +18,12 @@ public class DictionaryRegistry {
         dictionaries.put(dict.getName(), dict);
     }
 
+    public Dictionary[] resolve(String... names) {
+        Dictionary[] localDicts = new Dictionary[names.length];
+        for (int pos = 0; pos < names.length; ++pos) {
+            localDicts[pos] = get(names[pos]);
+        }
+        return localDicts;
+    }
+
 }

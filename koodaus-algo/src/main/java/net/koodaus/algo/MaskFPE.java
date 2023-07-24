@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 public class MaskFPE extends FpxAlgo {
 
     public static final String DEFAULT_KEY = "ваттерпежек0змА";
-    public static final String HMAC_NAME = "HmacSHA512";
+    public static final String HMAC_NAME = FpxFPE.HMAC_NAME;
 
     /**
      * Minimal constructor.
@@ -73,7 +73,7 @@ public class MaskFPE extends FpxAlgo {
     public MaskFPE(CharClassSet cset, byte[] userKey,
             int skipBefore, int skipAfter, boolean allowSameVal) {
         super(cset, userKey, skipBefore, skipAfter, allowSameVal, 
-                new FpxIndexFPE(fixKey(userKey), HMAC_NAME));
+                new FpxFPE(fixKey(userKey), HMAC_NAME));
     }
 
     public static byte[] fixKey(byte[] userKey) {

@@ -1,10 +1,12 @@
 package net.koodaus.algo;
 
+import java.io.Serializable;
+
 /**
  * Index generator factory interface.
  * @author zinal
  */
-public interface FpxIndexerFactory {
+public interface FpxIndexerFactory extends Serializable {
 
     /**
      * Create the new index generator based on the input value and iteration value.

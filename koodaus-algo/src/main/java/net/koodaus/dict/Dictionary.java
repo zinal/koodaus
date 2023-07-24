@@ -54,4 +54,16 @@ public interface Dictionary {
         }
     }
 
+    /**
+     * Build the new in-memory dictionary by extracting the specified element
+     * from the current dictionary's extra data.
+     * @param dictName Dictionary name for the new in-memory dictionary
+     * @param extraPos Position in the extras data
+     * @return New in-memory dictionary
+     */
+    default MemoryDictionary extractExtra(String dictName, int extraPos) {
+        return MemoryDictionary.loadEntries(dictName,
+                toStream().map( de -> new DictEntry(de.getExtra(extraPos)) ));
+    }
+
 }

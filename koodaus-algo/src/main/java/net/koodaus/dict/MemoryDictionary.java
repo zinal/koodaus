@@ -2,6 +2,7 @@ package net.koodaus.dict;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -15,7 +16,9 @@ import org.apache.commons.text.StringTokenizer;
  *
  * @author zinal
  */
-public class MemoryDictionary implements Dictionary {
+public class MemoryDictionary implements Dictionary, Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Dictionary.class);
 
