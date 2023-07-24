@@ -49,8 +49,8 @@ Sample generation statistics, case 2:
 
 ```text
 total rows:          250000000
-male distinct:       173128955
-female distinct:     150158672
+male distinct:       175618473
+female distinct:     151946984
 theoretical male:    404109480
 theoretical female:  258687660
 ```

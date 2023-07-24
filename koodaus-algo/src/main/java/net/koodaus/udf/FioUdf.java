@@ -2,7 +2,7 @@ package net.koodaus.udf;
 
 import java.io.File;
 import java.io.Serializable;
-import net.koodaus.algo.FpxCrc32;
+import net.koodaus.algo.FpxCrc64;
 import net.koodaus.algo.FpxIndexerFactory;
 import net.koodaus.dict.Dictionary;
 import net.koodaus.dict.DictionaryHarvester;
@@ -34,7 +34,7 @@ public class FioUdf implements Serializable {
     private final DictionaryHarvester harvestF;
 
     public FioUdf(DictionaryRegistry dr, String password) {
-        indexerFactory = new FpxCrc32(password);
+        indexerFactory = new FpxCrc64(password);
         namesFirstM = dr.get(NAMES_FIRST_M);
         namesLastM = dr.get(NAMES_LAST_M);
         namesFirstF = dr.get(NAMES_FIRST_F);
