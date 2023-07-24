@@ -56,7 +56,11 @@ public class MemoryDictionary implements Dictionary, Serializable {
     }
 
     public static MemoryDictionary load(String fname) {
-        String name = new File(fname).getName();
+        return load(new File(fname));
+    }
+
+    public static MemoryDictionary load(File fname) {
+        String name = fname.getName();
         int ixdot = name.lastIndexOf(".");
         if (ixdot > 0) {
             name = name.substring(0, ixdot);
@@ -65,8 +69,12 @@ public class MemoryDictionary implements Dictionary, Serializable {
     }
 
     public static MemoryDictionary load(String name, String fname) {
+        return load(name, new File(fname));
+    }
+
+    public static MemoryDictionary load(String name, File fname) {
         try {
-            return load(name, Files.lines(Paths.get(fname)));
+            return load(name, Files.lines(Paths.get(fname.getAbsolutePath())));
         } catch(IOException ix) {
             throw new RuntimeException("Cannot read file " + fname, ix);
         }
