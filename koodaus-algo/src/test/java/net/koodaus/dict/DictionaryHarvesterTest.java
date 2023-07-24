@@ -12,13 +12,13 @@ public class DictionaryHarvesterTest {
 
     @Test
     public void testHarvester() {
-        Dictionary namesFirstMale = MemoryDictionary.load("../dict-data/ru/names-first-male.txt");
+        Dictionary namesFirstMale = MemoryDictionary.load("../dict-data/test/names-first-male.txt");
         Assert.assertEquals("names-first-male", namesFirstMale.getName());
-        Dictionary namesFirstFemale = MemoryDictionary.load("../dict-data/ru/names-first-female.txt");
+        Dictionary namesFirstFemale = MemoryDictionary.load("../dict-data/test/names-first-female.txt");
         Assert.assertEquals("names-first-female", namesFirstFemale.getName());
-        Dictionary namesLastMale = MemoryDictionary.load("../dict-data/ru/names-last-male.txt");
+        Dictionary namesLastMale = MemoryDictionary.load("../dict-data/test/names-last-male.txt");
         Assert.assertEquals("names-last-male", namesLastMale.getName());
-        Dictionary namesLastFemale = MemoryDictionary.load("../dict-data/ru/names-last-female.txt");
+        Dictionary namesLastFemale = MemoryDictionary.load("../dict-data/test/names-last-female.txt");
         Assert.assertEquals("names-last-female", namesLastFemale.getName());
         Dictionary namesMiddleMale = namesFirstMale.extractExtra("names-middle-male", 0);
         Assert.assertEquals(namesFirstMale.size(), namesMiddleMale.size());

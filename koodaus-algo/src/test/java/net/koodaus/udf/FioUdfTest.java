@@ -16,7 +16,7 @@ public class FioUdfTest {
     @Test
     public void test1() throws Exception {
         final long position = 7000000L;
-        final FioUdf fu1 = new FioUdf("../dict-data/ru", "zztop");
+        final FioUdf fu1 = new FioUdf("../dict-data/test", "zztop");
         String orig1 = fu1.call(true, position);
         Assert.assertEquals("евстигнеев евсевий арсениевич", orig1);
         String orig2 = fu1.call(false, position);
