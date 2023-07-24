@@ -1,9 +1,9 @@
-package net.koodaus.spark;
+package net.koodaus.udf;
 
-import net.koodaus.dict.DictionaryRegistry;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.koodaus.dict.DictionaryRegistry;
 
 /**
  *

@@ -1,4 +1,4 @@
-package net.koodaus.spark;
+package net.koodaus.udf;
 
 import net.koodaus.algo.FpxFPH;
 import net.koodaus.algo.FpxIndexerFactory;
