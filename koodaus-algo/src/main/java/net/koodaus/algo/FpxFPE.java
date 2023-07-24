@@ -11,6 +11,8 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class FpxFPE implements FpxIndexerFactory {
 
+    private static final long serialVersionUID = 1L;
+
     public static final String HMAC_NAME = "HmacSHA512";
 
     private final String hmacName;

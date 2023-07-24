@@ -1,5 +1,6 @@
 package net.koodaus.dict;
 
+import java.io.Serializable;
 import net.koodaus.algo.FpxIndexer;
 import net.koodaus.algo.FpxIndexerFactory;
 
@@ -8,7 +9,9 @@ import net.koodaus.algo.FpxIndexerFactory;
  * 
  * @author mzinal
  */
-public class DictionaryHarvester {
+public class DictionaryHarvester implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public static final String DEFAULT_SEPARATOR = " ";
 

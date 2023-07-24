@@ -1,5 +1,7 @@
 package net.koodaus.udf;
 
+import java.io.File;
+import java.io.Serializable;
 import net.koodaus.algo.FpxFPH;
 import net.koodaus.algo.FpxIndexerFactory;
 import net.koodaus.dict.Dictionary;
@@ -10,7 +12,7 @@ import net.koodaus.dict.DictionaryRegistry;
  *
  * @author mzinal
  */
-public class FioUdf {
+public class FioUdf implements Serializable {
 
     public static final String NAMES_FIRST_M = "names-first-male";
     public static final String NAMES_MIDDLE_M = "names-middle-male";
@@ -53,7 +55,15 @@ public class FioUdf {
         harvestF = new DictionaryHarvester(indexerFactory, namesLastF, namesFirstF, namesMiddleF);
     }
 
-    public String get(boolean male, long position) {
+    public FioUdf(File baseDir, String password) {
+        this(new DictionaryRegistry(baseDir), password);
+    }
+
+    public FioUdf(String baseDir, String password) {
+        this(new DictionaryRegistry(new File(baseDir)), password);
+    }
+
+    public String call(boolean male, long position) {
         if (male) {
             return harvestM.harvest(position);
         } else {

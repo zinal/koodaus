@@ -9,6 +9,8 @@ import java.util.SplittableRandom;
  */
 public class FpxFPH implements FpxIndexerFactory {
 
+    private static final long serialVersionUID = 1L;
+
     private final byte[] userKey;
 
     public FpxFPH(byte[] userKey) {
