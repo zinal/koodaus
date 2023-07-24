@@ -4,13 +4,13 @@ package net.koodaus.algo;
  * Index generator interface
  * @author zinal
  */
-public interface FpxIndexGen {
+public interface FpxIndexer {
 
     /**
      * Retrieve the next index in an array of specified size
-     * @param charCount Size of an array
+     * @param sz Size of an array
      * @return Index value from 0 to size-1
      */
-    int nextIndex(int charCount);
+    int nextIndex(int sz);
 
 }

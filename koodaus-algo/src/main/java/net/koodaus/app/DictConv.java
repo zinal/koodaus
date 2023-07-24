@@ -2,6 +2,7 @@ package net.koodaus.app;
 
 import net.koodaus.dict.DictEntry;
 import net.koodaus.dict.Dictionary;
+import net.koodaus.dict.MemoryDictionary;
 
 /**
  *
@@ -54,20 +55,20 @@ public class DictConv {
             System.exit(2);
         }
         try {
-            Dictionary input = Dictionary.load(args[0]);
+            Dictionary input = MemoryDictionary.load(args[0]);
             Dictionary output;
             String actionCode = args[2];
             if ("LOWER".equalsIgnoreCase(actionCode)) {
-                output = Dictionary.loadEntries(input.getName(),
+                output = MemoryDictionary.loadEntries(input.getName(),
                     input.toStream().map(de -> new DictEntry(de.getValue().toLowerCase(), toLower(de.getExtras()))));
             } else if ("UPPER".equalsIgnoreCase(actionCode)) {
-                output = Dictionary.loadEntries(input.getName(),
+                output = MemoryDictionary.loadEntries(input.getName(),
                     input.toStream().map(de -> new DictEntry(de.getValue().toUpperCase(), toUpper(de.getExtras()))));
             } else if ("VALUE".equalsIgnoreCase(actionCode)) {
-                output = Dictionary.loadEntries(input.getName(),
+                output = MemoryDictionary.loadEntries(input.getName(),
                     input.toStream().map(de -> new DictEntry(de.getValue())));
             } else if ("PARENT1".equalsIgnoreCase(actionCode)) {
-                output = Dictionary.loadEntries(input.getName(),
+                output = MemoryDictionary.loadEntries(input.getName(),
                     input.toStream().map(de -> new DictEntry(de.getValue(), parent1(de.getValue()))));
             } else {
                 throw new IllegalArgumentException("Unsupported action: " + actionCode);

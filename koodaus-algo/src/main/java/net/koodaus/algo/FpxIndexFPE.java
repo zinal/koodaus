@@ -9,7 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
  * Replacement index generator, FPE implementation.
  * @author zinal
  */
-public class FpxIndexFPE implements FpxIndexFactory {
+public class FpxIndexFPE implements FpxIndexerFactory {
 
     private final Mac mac;
 
@@ -24,7 +24,7 @@ public class FpxIndexFPE implements FpxIndexFactory {
     }
 
     @Override
-    public FpxIndexGen make(String value, String iteration) {
+    public FpxIndexer make(String value, String iteration) {
         return new IndexGen(getMacValue(value, iteration));
     }
 
@@ -45,7 +45,7 @@ public class FpxIndexFPE implements FpxIndexFactory {
         }
     }
 
-    public static class IndexGen implements FpxIndexGen {
+    public static class IndexGen implements FpxIndexer {
 
         private final byte[] macValue;
         private BitSet macBits = null;
@@ -68,14 +68,17 @@ public class FpxIndexFPE implements FpxIndexFactory {
         }
 
         @Override
-        public int nextIndex(int charCount) {
-            if (charCount < 2) {
+        public int nextIndex(int sz) {
+            if (sz < 1) {
+                return -1;
+            }
+            if (sz < 2) {
                 return 0;
             }
             // Compute the number of bits required
             int maxVal = 1;
             int bitCount = 0;
-            while (maxVal <= charCount) {
+            while (maxVal <= sz) {
                 bitCount += 1;
                 maxVal *= 2;
             }
@@ -88,7 +91,7 @@ public class FpxIndexFPE implements FpxIndexFactory {
                 }
                 maxVal *= 2;
             }
-            return index % charCount;
+            return index % sz;
         }
 
     }

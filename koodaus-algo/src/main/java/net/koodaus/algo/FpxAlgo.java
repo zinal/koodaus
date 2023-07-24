@@ -5,10 +5,10 @@ import net.koodaus.util.KoodausUtil;
 
 /**
  * Naive Java-only FPE algorithm implementation.
- * Hashing is configurable through the IndexGenFactory interface.
+ * Hashing is configurable through the FpxIndexerFactory interface.
  * @author mzinal
  */
-public class FpxGeneric {
+public class FpxAlgo {
 
     // + skip chars before and after
     private final int skipBefore;
@@ -18,7 +18,7 @@ public class FpxGeneric {
     // + character classes
     private final CharClassSet charClassSet;
     // + index generator
-    private final FpxIndexFactory indexFactory;
+    private final FpxIndexerFactory indexFactory;
 
     /**
      * Construct the masking algorithm instance.
@@ -29,9 +29,9 @@ public class FpxGeneric {
      * @param allowSameVal Allow unmodified input
      * @param indexFactory Index factory to use
      */
-    public FpxGeneric(CharClassSet cset, String userKey,
+    public FpxAlgo(CharClassSet cset, String userKey,
             int skipBefore, int skipAfter, boolean allowSameVal,
-            FpxIndexFactory indexFactory) {
+            FpxIndexerFactory indexFactory) {
         this(cset,
                 (userKey==null) ? (byte[])null : userKey.getBytes(StandardCharsets.UTF_8),
                 skipBefore, skipAfter, allowSameVal, indexFactory);
@@ -46,9 +46,9 @@ public class FpxGeneric {
      * @param allowSameVal Allow unmodified input
      * @param indexFactory Index factory to use
      */
-    public FpxGeneric(CharClassSet cset, byte[] userKey,
+    public FpxAlgo(CharClassSet cset, byte[] userKey,
             int skipBefore, int skipAfter, boolean allowSameVal,
-            FpxIndexFactory indexFactory) {
+            FpxIndexerFactory indexFactory) {
         this.charClassSet = cset;
         if (skipBefore < 0)
             skipBefore = 0;
@@ -109,7 +109,7 @@ public class FpxGeneric {
         // prepare the current index generator object
         final String iterationData = ((iteration==0) && (substep==0)) ? null :
                 (Integer.toHexString(iteration) + "." + Integer.toHexString(substep));
-        final FpxIndexGen indexGen = indexFactory.make(value, iterationData);
+        final FpxIndexer indexGen = indexFactory.make(value, iterationData);
 
         // output buffer
         final StringBuilder retval = new StringBuilder(value.length());

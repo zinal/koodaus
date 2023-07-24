@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
  * Naive Java-only FPE algorithm implementation.
  * @author mzinal
  */
-public class MaskFPE extends FpxGeneric {
+public class MaskFPE extends FpxAlgo {
 
     public static final String DEFAULT_KEY = "ваттерпежек0змА";
     public static final String HMAC_NAME = "HmacSHA512";

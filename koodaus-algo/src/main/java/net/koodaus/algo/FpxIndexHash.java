@@ -7,7 +7,7 @@ import java.util.SplittableRandom;
  * Replacement index generator, CRC32 implementation.
  * @author zinal
  */
-public class FpxIndexHash implements FpxIndexFactory {
+public class FpxIndexHash implements FpxIndexerFactory {
 
     private final byte[] userKey;
 
@@ -16,7 +16,7 @@ public class FpxIndexHash implements FpxIndexFactory {
     }
 
     @Override
-    public FpxIndexGen make(String value, String iteration) {
+    public FpxIndexer make(String value, String iteration) {
         return new IndexGen(getSeedValue(value, iteration));
     }
 
@@ -30,7 +30,7 @@ public class FpxIndexHash implements FpxIndexFactory {
         return crc.getValue();
     }
 
-    public static class IndexGen implements FpxIndexGen {
+    public static class IndexGen implements FpxIndexer {
 
         private final SplittableRandom random;
 
@@ -47,14 +47,17 @@ public class FpxIndexHash implements FpxIndexFactory {
         }
 
         @Override
-        public int nextIndex(int charCount) {
-            if (charCount < 2) {
+        public int nextIndex(int sz) {
+            if (sz < 1) {
+                return -1;
+            }
+            if (sz < 2) {
                 return 0;
             }
             // Compute the number of bits required
             int maxVal = 1;
             int bitCount = 0;
-            while (maxVal <= charCount) {
+            while (maxVal <= sz) {
                 bitCount += 1;
                 maxVal *= 2;
             }
@@ -67,7 +70,7 @@ public class FpxIndexHash implements FpxIndexFactory {
                 }
                 maxVal *= 2;
             }
-            return index % charCount;
+            return index % sz;
         }
 
     }

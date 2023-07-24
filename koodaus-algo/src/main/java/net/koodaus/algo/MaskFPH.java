@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
  * Naive Java-only FPE algorithm implementation.
  * @author mzinal
  */
-public class MaskFPH extends FpxGeneric {
+public class MaskFPH extends FpxAlgo {
 
     public static final String DEFAULT_KEY = "иди0синкразия";
 
