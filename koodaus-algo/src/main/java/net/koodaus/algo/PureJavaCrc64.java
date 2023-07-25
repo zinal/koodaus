@@ -1,5 +1,7 @@
 package net.koodaus.algo;
 
+import java.nio.ByteBuffer;
+
 /**
  * CRC64 checksum calculator based on the polynom specified in ISO 3309. The
  * implementation is based on the following publications:
@@ -86,6 +88,13 @@ public class PureJavaCrc64 {
             sum = update(sum, bytes[i]);
         }
         return sum;
+    }
+
+    public static long update(long sum, long val) {
+        ByteBuffer temp = ByteBuffer.allocate(Long.BYTES);
+        temp.putLong(val);
+        byte[] xv = temp.array();
+        return update(sum, xv, 0, xv.length);
     }
 
 }

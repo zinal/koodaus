@@ -7,7 +7,7 @@ import org.junit.Test;
  *
  * @author mzinal
  */
-public class UuidUdfTest {
+public class UtilUdfTest {
 
     private static final String[] VALUES = {
         "uvI53uYUDX4AAAAAAAAAAQ",
@@ -28,7 +28,7 @@ public class UuidUdfTest {
 
     @Test
     public void test1() {
-        final UuidUdf uu = new UuidUdf("служил гаврило колумнистом");
+        final UtilUdf uu = new UtilUdf("служил гаврило колумнистом");
         int pos = 0;
         for (long v = 1; v < 999999999999999L; v *= 13L) {
             String xv = uu.long2str(v);

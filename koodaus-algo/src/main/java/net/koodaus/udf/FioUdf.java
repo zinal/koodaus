@@ -71,4 +71,8 @@ public class FioUdf implements Serializable {
         }
     }
 
+    public String callCode12(int sex, long position) {
+        return call((sex==1), position);
+    }
+
 }
