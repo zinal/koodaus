@@ -3,6 +3,7 @@ package net.koodaus.udf;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.UUID;
 import net.koodaus.algo.PureJavaCrc64;
 
@@ -38,7 +39,14 @@ public class UuidUdf implements Serializable {
     }
 
     public String long2str(long v) {
-        return long2uid(v).toString().replace("-", "");
+        ByteBuffer temp = ByteBuffer.allocate(Long.BYTES);
+        temp.putLong(v);
+        byte[] xv = temp.array();
+        long crc = PureJavaCrc64.update(keyState, xv, 0, xv.length);
+        ByteBuffer out = ByteBuffer.allocate(2 * Long.BYTES);
+        out.putLong(crc);
+        out.putLong(v);
+        return Base64.getUrlEncoder().encodeToString(out.array()).substring(0, 22);
     }
 
 }
