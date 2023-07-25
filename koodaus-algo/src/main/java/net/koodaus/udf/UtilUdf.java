@@ -45,7 +45,7 @@ public class UtilUdf implements Serializable {
         String[] parts = fullname.split(" ");
         if (parts.length > 1) {
             final StringBuilder sb = new StringBuilder();
-            for (int pos=0; pos<parts.length; pos++) {
+            for (int pos=1; pos<parts.length; pos++) {
                 if (sb.length() > 0)
                     sb.append(" ");
                 sb.append(parts[pos]);
