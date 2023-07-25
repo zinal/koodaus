@@ -7,12 +7,15 @@ import net.koodaus.algo.FpxIndexerFactory;
 import net.koodaus.dict.Dictionary;
 import net.koodaus.dict.DictionaryHarvester;
 import net.koodaus.dict.DictionaryRegistry;
+import org.apache.commons.text.WordUtils;
 
 /**
  *
  * @author mzinal
  */
 public class FioUdf implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public static final String NAMES_FIRST_M = "names-first-male";
     public static final String NAMES_MIDDLE_M = "names-middle-male";
@@ -64,11 +67,13 @@ public class FioUdf implements Serializable {
     }
 
     public String call(boolean male, long position) {
+        String value;
         if (male) {
-            return harvestM.harvest(position);
+            value = harvestM.harvest(position);
         } else {
-            return harvestF.harvest(position);
+            value = harvestF.harvest(position);
         }
+        return WordUtils.capitalize(value);
     }
 
     public String callCode12(int sex, long position) {

@@ -18,9 +18,9 @@ public class FioUdfTest {
         final long position = 7000000L;
         final FioUdf fu1 = new FioUdf("../dict-data/test", "zztop");
         String orig1 = fu1.call(true, position);
-        Assert.assertEquals("евстигнеев евсевий арсениевич", orig1);
+        Assert.assertEquals("евстигнеев евсевий арсениевич", orig1.toLowerCase());
         String orig2 = fu1.call(false, position);
-        Assert.assertEquals("евстигнеева маина арсениевна", orig2);
+        Assert.assertEquals("евстигнеева маина арсениевна", orig2.toLowerCase());
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
