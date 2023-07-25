@@ -81,7 +81,7 @@ public class MemoryDictionary implements Dictionary, Serializable {
     }
 
     public static MemoryDictionary load(String name, Stream<String> data) {
-        final StringTokenizer st = StringTokenizer.getCSVInstance();
+        final StringTokenizer st = StringTokenizer.getTSVInstance();
         return loadEntries(name, data.map(line -> {
             st.reset(line);
             String[] items = st.getTokenArray();
