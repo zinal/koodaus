@@ -33,7 +33,15 @@ public class PureJavaCrc64 {
         }
     }
 
-    private long sum = 0L;
+    private long sum;
+    
+    public PureJavaCrc64() {
+        this.sum = 0L;
+    }
+
+    public PureJavaCrc64(long sum) {
+        this.sum = sum;
+    }
 
     public void update(byte b) {
         sum = update(sum, b);
@@ -45,6 +53,13 @@ public class PureJavaCrc64 {
 
     public void update(byte[] b, int from, int to) {
         sum = update(sum, b, from, to);
+    }
+
+    public void update(long val) {
+        ByteBuffer temp = ByteBuffer.allocate(Long.BYTES);
+        temp.putLong(val);
+        byte[] xv = temp.array();
+        update(xv, 0, xv.length);
     }
 
     public long getValue() {

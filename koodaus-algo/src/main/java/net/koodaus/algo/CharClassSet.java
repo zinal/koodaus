@@ -3,6 +3,7 @@ package net.koodaus.algo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,7 +16,9 @@ import net.koodaus.util.JdomHelpers;
  * Java algorithm implementation
  * @author mzinal
  */
-public class CharClassSet {
+public class CharClassSet implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String name;
     private final List<Entry> entries;
@@ -37,6 +40,19 @@ public class CharClassSet {
                             new Range('а', 'я'), new Range('ё') }),
                     new Entry("large-cyrillic", new Range[] {
                             new Range('А', 'Я'), new Range('Ё') }),
+                    new Entry("numbers", new Range('0', '9'))
+            ));
+
+    public static final CharClassSet ONLY_RUSSIAN = new CharClassSet (
+            "only-russian", Arrays.asList(
+                    new Entry("small-cyrillic", new Range[] {
+                            new Range('а', 'я'), new Range('ё') }),
+                    new Entry("large-cyrillic", new Range[] {
+                            new Range('А', 'Я'), new Range('Ё') })
+            ));
+
+    public static final CharClassSet ONLY_NUMBERS = new CharClassSet (
+            "only-numbers", Arrays.asList(
                     new Entry("numbers", new Range('0', '9'))
             ));
 
@@ -63,6 +79,19 @@ public class CharClassSet {
             }
         }
         return EMPTY_ENTRY;
+    }
+
+    /**
+     * @return All characters as textual string
+     */
+    public String getAsText() {
+        final StringBuilder sb = new StringBuilder();
+        for (Entry entry : entries) {
+            for (int cp : entry.chars) {
+                sb.appendCodePoint(cp);
+            }
+        }
+        return sb.toString();
     }
 
     /**
@@ -166,7 +195,10 @@ public class CharClassSet {
     /**
      * Character range
      */
-    public static class Range {
+    public static class Range implements Serializable {
+        
+        private static final long serialVersionUID = 1L;
+        
         final int charBegin;
         final int charEnd;
         final int size;
@@ -198,7 +230,10 @@ public class CharClassSet {
     /**
      * Character class, composed of multiple character ranges
      */
-    public static class Entry {
+    public static class Entry implements Serializable {
+        
+        private static final long serialVersionUID = 1L;
+        
         final String name;
         final Range[] ranges;
         final int[] chars;

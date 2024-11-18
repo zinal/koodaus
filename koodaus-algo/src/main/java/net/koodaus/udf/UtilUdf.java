@@ -61,5 +61,5 @@ public class UtilUdf implements Serializable {
             return parts[0];
         return fullname;
     }
-
+    
 }

@@ -9,8 +9,7 @@ import java.util.HashMap;
  */
 public class CyrillicTranslit {
 
-    private static final HashMap<Character, String> HM =
-            new HashMap<Character, String>();
+    private static final HashMap<Character, String> HM = new HashMap<>();
 
     static {
         HM.put('а', "a");

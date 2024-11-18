@@ -3,6 +3,7 @@ package net.koodaus.algo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,9 @@ import net.koodaus.util.KoodausUtil;
  * Translation table for character substitution.
  * @author zinal
  */
-public class CharzTable {
+public class CharzTable implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     private final String name;
     private final List<Range> ranges;
@@ -309,7 +312,10 @@ public class CharzTable {
     /**
      * Character translation range
      */
-    public static class Range {
+    public static class Range implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+
         final int src;
         final int dst;
         final int size;
