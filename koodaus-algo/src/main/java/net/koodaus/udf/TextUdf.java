@@ -19,21 +19,32 @@ public class TextUdf implements Serializable {
     private final int minLen;
     private final int maxLen;
 
-    public TextUdf(byte[] userKey, CharClassSet ccs, int minLen, int maxLen) {
+    public TextUdf(byte[] userKey, long subkey, CharClassSet ccs, 
+            int minLen, int maxLen) {
         if (userKey==null || userKey.length==0) {
-            keyState = 0L;
+            keyState = subkey;
         } else {
-            keyState = PureJavaCrc64.update(0, userKey, 0, userKey.length);
+            keyState = PureJavaCrc64.update(subkey, userKey, 0, userKey.length);
         }
         this.ccs = ccs.getAsText();
         this.minLen = minLen;
         this.maxLen = maxLen;
     }
 
+    public TextUdf(String userKey, long subkey, CharClassSet ccs, int minLen, int maxLen) {
+        this((userKey==null || userKey.length()==0) ?
+                (byte[])null : userKey.getBytes(StandardCharsets.UTF_8),
+                subkey, ccs, minLen, maxLen);
+    }
+
+    public TextUdf(byte[] userKey, CharClassSet ccs, int minLen, int maxLen) {
+        this(userKey, 0L, ccs, minLen, maxLen);
+    }
+
     public TextUdf(String userKey, CharClassSet ccs, int minLen, int maxLen) {
         this((userKey==null || userKey.length()==0) ?
                 (byte[])null : userKey.getBytes(StandardCharsets.UTF_8),
-                ccs, minLen, maxLen);
+                0L, ccs, minLen, maxLen);
     }
 
     public String word(long position) {
