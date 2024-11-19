@@ -56,7 +56,7 @@ public class TextUdf implements Serializable {
     public String phrase(long position) {
         final SplittableRandom random = new SplittableRandom(
                 PureJavaCrc64.update(keyState, position));
-        final int wordMax = maxLen / 5;
+        final int wordMax = (maxLen > 100) ? 20 : (maxLen / 5);
         if (wordMax < 4) {
             return word(random, minLen, maxLen);
         }
