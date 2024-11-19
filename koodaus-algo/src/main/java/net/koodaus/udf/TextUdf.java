@@ -85,4 +85,17 @@ public class TextUdf implements Serializable {
         return sb.toString();
     }
 
+    public String zip(long position) {
+        long newState = PureJavaCrc64.update(keyState, position);
+        int value = new SplittableRandom(newState).nextInt(100000, 999999 + 1);
+        return Integer.toString(value);
+    }
+
+    // 79036305064
+    public String phone(long position) {
+        long newState = PureJavaCrc64.update(keyState, position);
+        long value = new SplittableRandom(newState).nextLong(9000000000L, 9999999999L + 1);
+        return "7" + Long.toString(value);
+    }
+
 }
